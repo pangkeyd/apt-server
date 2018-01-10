@@ -27,6 +27,62 @@ let getApt = (cb) => {
   })
 }
 
+let postApt = (body, file, cb) => {
+  let title = body.title
+  let d = new Date()
+  let date = d.toDateString()
+  let slug = title.split(' ').join('-')
+  if(file){
+    let tags = body.tag.split(',')
+    let aptSchema = new Apt({
+      title: title,
+      date: date,
+      location: body.location,
+      category: body.category,
+      image: file.cloudStoragePublicUrl,
+      description: body.description,
+      views: 0,
+      slug: slug,
+      tags: tags
+    })
+    aptSchema.save((err, apt) => {
+      if(err) res.status(500).send(err)
+      cb(apt)
+    })
+  }else if(!file && body.tag){
+    let tags = body.tag.split(',')
+    let aptSchema = new Apt({
+      title: title,
+      date: date,
+      location: body.location,
+      category: body.category,
+      description: body.description,
+      views: 0,
+      slug: slug,
+      tags: tags
+    })
+    aptSchema.save((err, apt) => {
+      if(err) res.status(500).send(err)
+      cb(apt)
+    })
+  }else if(!file && !body.tag){
+    let aptSchema = new Apt({
+      title: title,
+      date: date,
+      location: body.location,
+      category: body.category,
+      description: body.description,
+      views: 0,
+      slug: slug
+    })
+    aptSchema.save((err, apt) => {
+      if(err) res.status(500).send(err)
+      cb(apt)
+    })
+  }
+}
+
 module.exports = {
-  getApt
+  getApt,
+  postApt
 }
