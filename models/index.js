@@ -82,7 +82,18 @@ let postApt = (body, file, cb) => {
   }
 }
 
+let deleteApt = (params, cb) => {
+  Apt.remove({
+    _id: params.id
+  }, (err) => {
+    if(err) res.status(500).send(err)
+    let success = 'Success Delete!'
+    cb(success)
+  })
+}
+
 module.exports = {
   getApt,
-  postApt
+  postApt,
+  deleteApt
 }

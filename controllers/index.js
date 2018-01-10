@@ -15,6 +15,12 @@ class Apt {
     })
   }
 
+  static deleteData(req, res){
+    apt.deleteApt(req.params, (result) => {
+      res.send(result)
+    })
+  }
+
 }
 
 module.exports = Apt
