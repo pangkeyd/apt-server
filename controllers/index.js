@@ -8,6 +8,13 @@ class Apt {
     })
   }
 
+  static postData(req, res){
+    apt.postApt(req.body, req.file, (result) => {
+      res.send(result)
+      console.log(result)
+    })
+  }
+
 }
 
 module.exports = Apt
