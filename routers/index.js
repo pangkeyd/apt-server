@@ -14,4 +14,6 @@ router.post('/', image.multer.single('image'), image.sendUploadToGCS, Apt.postDa
   }
 })
 
+router.delete('/delete/:id', Apt.deleteData)
+
 module.exports = router

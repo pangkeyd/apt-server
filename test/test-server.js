@@ -6,6 +6,8 @@ const server = require('../app')
 
 chai.use(chaiHttp)
 
+// DATA APT
+
 describe('/GET || get all apt', () => {
   it('it should be GET all apt', (done) => {
     chai.request(server)
@@ -100,6 +102,22 @@ describe('/POST || post apt without image and tag', () => {
       if(err) done(err)
       res.should.have.status(200)
       done()
+    })
+  })
+})
+
+describe('/DELETE || delete apt', () => {
+  it('it should be DELETE apt', (done) => {
+    chai.request(server)
+    .get('/')
+    .end((error, response) => {
+      chai.request(server)
+      .delete('/delete/' + response.body[0]._id)
+      .end((err, res) => {
+        if(err) done(err)
+        res.should.have.status(200)
+        done()
+      })
     })
   })
 })
